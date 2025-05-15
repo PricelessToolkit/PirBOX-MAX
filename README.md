@@ -49,5 +49,5 @@ Actual battery life will vary depending on battery quality, temperature, transmi
 
 
 ### Required:
-- [CapiBridge](https://github.com/PricelessToolkit/CapiBridge)
+- LoRa Gateway [CapiBridge](https://github.com/PricelessToolkit/CapiBridge)
 - 3 x AAA 1.5v Battery
