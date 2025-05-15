@@ -20,10 +20,10 @@ Your subscription goes a long way in backing my work. If you feel more generous,
 ### Key Features:
 - Seamless integration with **Home Assistant MQTT**  
 - **LoRa-based communication** with **two-way support** for remote control and feedback  
-- Sends motion status**(Detected / Cleared)** door and window, **(Open / Closed)** and **(On / Off)** status for **button input**, all to a LoRa gateway **[CapiBridge](https://github.com/PricelessToolkit/CapiBridge)**  
-- **Two reed switch inputs** (supports both Normally Open and Normally Closed configurations) — ideal for door and window monitoring  
+- **PIR Motion sensor** (Detected / Cleared) 
+- **Two reed switch inputs** (supports both Normally Open and Normally Closed configurations)
 - **Two SSR (solid-state relay) outputs** for controlling lights, gates, or other loads  
-- **One button input** — perfect for use as a **doorbell-style button on a remote gate**  
+- **One button input** perfect for use as a **doorbell-style button on a remote gate**  
 - **Screw terminals** for all inputs and outputs for secure and simple wiring  
 - **Ultra-low power consumption**: ~12 µAh during active or inactive periods  
 - Powered by **3× AAA 1.5V batteries** for extended runtime  
