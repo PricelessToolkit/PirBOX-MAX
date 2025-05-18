@@ -66,7 +66,8 @@ void initLoRaRadio() {
     LORA_PREAMBLE_LENGTH,
     LORA_PAYLOADLENGTH,
     LORA_CRC_ON,
-    false             // no IQ inversion
+    false,  // No IQ inversion
+    LORA_SYNC_WORD
   );
 
   // Serial.println(F("LoRa ready to go!"));

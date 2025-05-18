@@ -127,12 +127,24 @@ void SX126x::FixInvertedIQ(uint8_t iqConfig)
 }
 
 
-void SX126x::LoRaConfig(uint8_t spreadingFactor, uint8_t bandwidth, uint8_t codingRate, uint16_t preambleLength, uint8_t payloadLen, bool crcOn, bool invertIrq) 
+void SX126x::LoRaConfig(uint8_t spreadingFactor, uint8_t bandwidth, uint8_t codingRate, uint16_t preambleLength, uint8_t payloadLen, bool crcOn, bool invertIrq, uint16_t syncWord) 
 {
 
   SetStopRxTimerOnPreambleDetect(false);
   SetLoRaSymbNumTimeout(0); 
   SetPacketType(SX126X_PACKET_TYPE_LORA); // SX126x.ModulationParams.PacketType : MODEM_LORA
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // Set sync word if provided 
+if (syncWord == 0xFFFF) {
+  // No sync word passed — use default (public)
+  SetSyncWord(SX126X_SYNC_WORD_PUBLIC);  // or SX126X_SYNC_WORD_PRIVATE
+} else {
+  // Custom sync word passed — use it
+  SetSyncWord(syncWord);
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   uint8_t ldro = 0; // LowDataRateOptimize OFF
   SetModulationParams(spreadingFactor, bandwidth, codingRate, ldro);
   
@@ -949,3 +961,12 @@ void SX126x::ReadCommand(uint8_t cmd, uint8_t* data, uint8_t numBytes, bool wait
     WaitForIdle(BUSY_WAIT, (char*) "end ReadCommand", false);
   }
 }
+////////////////////////////////////////////////////////////////////////////////////////////// ADDED Sync Word ////////////////////////////////////////////////////////
+void SX126x::SetSyncWord(uint16_t syncWord) {
+  uint8_t data[2] = {
+    (uint8_t)((syncWord >> 8) & 0xFF),
+    (uint8_t)(syncWord & 0xFF)
+  };
+  WriteRegister(SX126X_REG_LORA_SYNC_WORD_MSB, data, 2);
+}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
