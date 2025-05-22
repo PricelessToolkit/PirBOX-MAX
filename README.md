@@ -68,6 +68,8 @@ Actual battery life will vary depending on battery quality, temperature, transmi
 > [!IMPORTANT]  
 > The PirBOX LoRa module uses the sync word `0x1424`, which is equivalent to the CapiBridge's `0x12` sync word.
 
+The configuration file is self-explanatory, each setting is clearly commented. If you take a moment to read through the comments, everything should be clear without requiring further explanation.
+
 ```cpp
 
 /////////////////////////// LoRa Gateway Key ///////////////////////////
@@ -77,12 +79,13 @@ Actual battery life will vary depending on battery quality, temperature, transmi
 
 //////////////////////////// Logic //////////////////////////////////////
 
-#define Power "Battery"            // Can be "Battery" or "External"
-#define TwoWayCom  "False"         // "True" or "False", If True, after sending sensor data, it will go into receiver mode and will wait "KeepPowerON_Time" for commands.
-#define KeepPowerON_Time 15        // Waiting xx seconds to receive command; if no command is received after KeepPowerON_Time it will power off.
-#define RelayOn_Time     1         // How much time relays will keep contact.
-#define Invert_RSW1_Logic "false"  // If "true", Reed Switch 1 logic will be inverted.
-#define Invert_RSW2_Logic "false"  // If "true", Reed Switch 2 logic will be inverted.
+#define Power             "Battery"  // Can be "Battery" or "External"
+#define TwoWayCom         "False"    // "True" or "False", If True, after sending sensor data, it will go into receiver mode and will wait "KeepPowerON_Time" for commands.
+#define KeepPowerON_Time   15        // Waiting xx seconds to receive command; if no command is received after KeepPowerON_Time it will power off.
+#define RelayOn_Time       1         // How much time relays will keep contact.
+#define Command_ACK       "false"    // Acknowledgement of received command (if "true" Sends back relay command "01","10" or "11")
+#define Invert_RSW1_Logic "false"    // If "true", Reed Switch 1 logic will be inverted.
+#define Invert_RSW2_Logic "false"    // If "true", Reed Switch 2 logic will be inverted.
 
 ////////////////////////////// LORA CONFIG //////////////////////////////
 
