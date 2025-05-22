@@ -5,10 +5,13 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 
-#define Power "Battery"           // Can be "Battery" or "External"
-#define TwoWayCom  "False"         // "True" or "False", If True, after sending sensor data it will go into receiver mode and will wait "KeepPowerON_Time" for commands.
+#define Power "Battery"            // Can be "Battery" or "External"
+#define TwoWayCom  "false"         // "true" or "false", If True, after sending sensor data it will go into receiver mode and will wait "KeepPowerON_Time" for commands.
 #define KeepPowerON_Time 15        // Waiting xx seconds to receive command; if no command is received after KeepPowerON_Time it will power off.
-#define RelayOn_Time     1        // How much time relays will keep contact.
+#define RelayOn_Time     1         // How much time relays will keep contact.
+#define INVERT_RSW1_LOGIC "false"  // If "true", Reed Switch 1 logic will be inverted (Normally Open / Normally Closed)
+#define INVERT_RSW2_LOGIC "false"  // If "true", Reed Switch 2 logic will be inverted (Normally Open / Normally Closed)
+
 
 ////////////////////////////// LORA CONFIG ////////////////////////////////////
 

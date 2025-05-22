@@ -213,6 +213,15 @@ void loop() {
     int currentRSW1 = digitalRead(RSW_PIN_1);
     int currentRSW2 = digitalRead(RSW_PIN_2);
 
+    // Invert logic if defined as "true"
+    if (String(INVERT_RSW1_LOGIC) == "true") {
+      currentRSW1 = !currentRSW1;
+    }
+
+    if (String(INVERT_RSW2_LOGIC) == "true") {
+      currentRSW2 = !currentRSW2;
+    }
+
     firstRun = false;
 
     // Build JSON payload
@@ -234,10 +243,10 @@ void loop() {
 
     // Decide what to do after sending
     if (String(Power) == "Battery") {
-      if (String(TwoWayCom) == "True") {
+      if (String(TwoWayCom) == "true") {
         powerTimerStart = millis();   // Start 3s wait
         timerStarted = true;
-      } else if (String(TwoWayCom) == "False") {
+      } else if (String(TwoWayCom) == "false") {
         powerOFF();  // Shutdown immediately
       }
     }
