@@ -1,7 +1,13 @@
 /////////////////////////// LoRa Gateway Key ///////////////////////////
 
-#define GATEWAY_KEY "xy"          // Keep it Short
-#define NODE_NAME "PirBoxM"        // Sensor Name which will be visible in Home Assistant
+#define GATEWAY_KEY "xy"                           // Separation Key "Keep it Short 2 letters is enough"
+#define NODE_NAME "PirBoxM"                        // Sensor Name which will be visible in Home Assistant
+#define Encryption true                            // Global Payload obfuscation (Encryption)
+#define encryption_key_length 4                    // must match number of bytes in the XOR key array
+#define encryption_key { 0x4B, 0xA3, 0x3F, 0x9C }  // Multi-byte XOR key (between 2–16 values).
+                                                   // Use random-looking HEX values (from 0x00 to 0xFF).
+                                                   // Must match exactly on both sender and receiver.
+                                                   // Example: { 0x1F, 0x7E, 0xC2, 0x5A }  ➜ 4-byte key.
 
 ///////////////////////////////////////////////////////////////////////////////
 

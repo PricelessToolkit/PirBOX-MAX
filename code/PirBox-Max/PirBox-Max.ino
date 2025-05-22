@@ -44,6 +44,23 @@ unsigned long relay2OffTime = 0;
 unsigned long powerTimerStart = 0;
 bool timerStarted = false;
 
+// -------------------- Xor Encryp/Decrypt -------------------- //
+
+String xorCipher(String input) {
+  const byte key[] = encryption_key;
+  const int keyLength = encryption_key_length;
+
+  String output = "";
+  for (int i = 0; i < input.length(); i++) {
+    byte keyByte = key[i % keyLength];
+    output += char(input[i] ^ keyByte);
+  }
+  return output;
+}
+
+
+
+
 // -------------------- INTERRUPT SERVICE ROUTINE -------------------- //
 void sensorISR() {
   sensorTriggered = true;
@@ -118,6 +135,12 @@ void ComReceive() {
       receivedMsg += (char)rxData[i];
     }
 
+
+    #if Encryption
+    receivedMsg = xorCipher(receivedMsg);
+    #endif
+
+
     JsonDocument doc;
     DeserializationError error = deserializeJson(doc, receivedMsg);
     if (error) {
@@ -155,6 +178,12 @@ void ComReceive() {
         String ack = "{\"k\":\"" + String(GATEWAY_KEY)
                   + "\",\"id\":\"" + String(NODE_NAME)
                   + "\",\"rw\":\"" + combined + "\"}";
+
+        // Scramble if encryption is enabled
+        #if Encryption
+        ack = xorCipher(ack);
+        #endif
+
 
         const char* ackStr = ack.c_str();
         lora.Send((uint8_t*)ackStr, ack.length(), SX126x_TXMODE_SYNC);
@@ -239,6 +268,12 @@ void loop() {
                    + ",\"wd\":\"" + String(currentRSW2 == HIGH ? "on" : "off") + "\""
                    + ",\"b\":" + String(batt()) + "}";
 
+    // Scramble if encryption is enabled
+    #if Encryption
+    payload = xorCipher(payload);
+    #endif
+
+
     // Send LoRa packet
     const char* cstrPayload = payload.c_str();
     uint8_t length = payload.length();
@@ -265,7 +300,7 @@ void loop() {
   updateRelayStates();
 
   // Handle countdown shutdown if waiting (Battery + TwoWayCom = True)
-  if (timerStarted && String(Power) == "Battery" && String(TwoWayCom) == "True") {
+  if (timerStarted && String(Power) == "Battery" && String(TwoWayCom) == "true") {
     if (millis() - powerTimerStart >= (KeepPowerON_Time * 1000UL)) {
       powerOFF();
     }
