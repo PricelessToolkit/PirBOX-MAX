@@ -15,7 +15,7 @@ Your subscription goes a long way in backing my work. If you feel more generous,
 
 <img src="img/ha.png"/>
 
-#### 🛒 Coming soon in my shop http://www.PricelessToolkit.com
+#### 🛒 Coming soon to my shop. http://www.PricelessToolkit.com
 
 ### ✨ Key Features:
 - Seamless integration with **Home Assistant MQTT**  
