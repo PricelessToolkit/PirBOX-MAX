@@ -53,7 +53,7 @@ Actual battery life will vary depending on battery quality, temperature, transmi
 - [CapiBridge LoRa Gateway](https://github.com/PricelessToolkit/CapiBridge) for full functionality! or the one-way more affordable version [TTGO_Gateway](https://github.com/PricelessToolkit/TTGO_Gateway) *features and support is limited.
 - 3 x AAA 1.5v Battery.
 
-## 📣 Updates, Bugfixes, and Breaking Changes
+### 📣 Updates, Bugfixes, and Breaking Changes
 - 22.05.2025 - XOR obfuscation "Encryption" work in progress.
 ```cpp
 #define Encryption true      // Global Payload obfuscation (Encryption)
