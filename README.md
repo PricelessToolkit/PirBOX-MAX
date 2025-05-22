@@ -193,6 +193,19 @@ The **PirBOX-MAX** features a 12-pin screw terminal. Below is the pinout and des
 | 8     | R2           | Relay 2 — No polarity                |
 | 9     | R1           | Relay 1 — No polarit                 |
 | 10    | R1           | Relay 1 — No polarit                 |
-| 11    | GND          | GNG                                  |
-| 12    | 5V           | 5V input                             |
+| 11    | GND          | GND                                  |
+| 12    | 5V           | 5V input,  "At least 150mA"          |
 
+
+
+# Prefer to build it on your own?
+This project is open-source and includes Source code, 3D Print files, and Gerber files, allowing you to order blank PCBs and assemble the PirBOX-Lite yourself. To help with manual assembly, I've included an Interactive HTML BOM in the PCB folder. This tool shows the placement and polarity of each component, helping to eliminate errors during soldering.
+
+> [!NOTE]
+>  Please note that POS (Pick and Place) files and KiCad source files are not included. These are intentionally omitted, as this project is intended for manual assembly. If you prefer a ready-to-use solution, you can purchase one directly from my shop: https://www.pricelesstoolkit.com.
+
+## Schematic
+<details>
+  <summary>View schematic. Click here</summary>
+<img src="PCB/PirBOX-MAX_Schematic.jpg"/>
+</details>
