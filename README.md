@@ -243,9 +243,18 @@ The **PirBOX-MAX** features a 12-pin screw terminal. Below is the pinout and des
 | 11    | GND          | GND                                  |
 | 12    | 5V           | 5V input,  "At least 150mA"          |
 
+----------------------------
 
 
-# Prefer to build it on your own?
+
+# 🛠️ Prefer to build it on your own?
+
+### Schematic
+<details>
+  <summary>View schematic. Click here</summary>
+<img src="PCB/PirBOX-MAX_Schematic.jpg"/>
+</details>
+
 This project is open-source and includes Source code, 3D Print files, and Gerber files, allowing you to order blank PCBs and assemble the PirBOX-Lite yourself. To help with manual assembly, I've included an Interactive HTML BOM in the PCB folder. This tool shows the placement and polarity of each component, helping to eliminate errors during soldering.
 
 <img src="img\ibom.jpg"/>
@@ -253,8 +262,18 @@ This project is open-source and includes Source code, 3D Print files, and Gerber
 > [!NOTE]
 >  Please note that POS (Pick and Place) files and KiCad source files are not included. These are intentionally omitted, as this project is intended for manual assembly. If you prefer a ready-to-use solution, you can purchase one directly from my shop: https://www.pricelesstoolkit.com.
 
-## Schematic
-<details>
-  <summary>View schematic. Click here</summary>
-<img src="PCB/PirBOX-MAX_Schematic.jpg"/>
-</details>
+----------------------------
+
+### Disclaimer & Security Notice
+
+> [!IMPORTANT]
+> **Do not use this system to control critical access points** such as your home’s main door or garage.  
+> This project is intended for **non-critical applications**, such as remotely controlling a farm or ranch gate, shed lights, or other low-risk devices in open environments.
+> 
+> This project does **not implement any form of secure or encrypted communication** (e.g., AES-128 or other cryptographic protocols). All communication is transmitted **in plain text over the air** and can be intercepted using LoRa boards with the same radio configuration.
+> 
+> ### 🔍 Why encryption is not used:
+> - ✅ **Beginner-friendly**: Keeping the node code simple makes it easier to understand, modify, and deploy.
+> - 📦 **Smaller payloads**: Unencrypted messages are smaller, which improves efficiency and reduces transmission time.
+> - 👮 **Regulatory compliance**: The frequency band used may **not be authorized for encrypted communication** in some countries and could be subject to local restrictions.
+> - 📡 **Replay attacks exist anyway**: Even commercial systems like car key fobs are vulnerable to **replay attacks**, regardless of encryption.
