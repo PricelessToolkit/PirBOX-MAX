@@ -33,7 +33,7 @@ Your subscription goes a long way in backing my work. If you feel more generous,
 
 
 > [!NOTE]
-> **Not intended** for indoor use or high traffic areas, Zigbee devices are better suited for that.  
+> **Not intended** for close proximity use or in high-traffic areas, Zigbee devices are better suited for those applications.
 
 ### 📋 Power Consumption Table
 Measured by "Power Profiler KIT 2"
