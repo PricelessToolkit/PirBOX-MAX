@@ -145,15 +145,21 @@ void ComReceive() {
         digitalWrite(RELAY_PIN_2, LOW);  // turn OFF if not asked
       }
 
-      // Build ACK (compact 2-bit style)
-      String r1 = digitalRead(RELAY_PIN_1) == HIGH ? "1" : "0";
-      String r2 = digitalRead(RELAY_PIN_2) == HIGH ? "1" : "0";
-      String combined = r1 + r2;
+      // Only send ACK if Command_ACK is "true"
+      if (String(Command_ACK) == "true") {
+        // Build ACK (compact 2-bit style)
+        String r1 = digitalRead(RELAY_PIN_1) == HIGH ? "1" : "0";
+        String r2 = digitalRead(RELAY_PIN_2) == HIGH ? "1" : "0";
+        String combined = r1 + r2;
 
-      String ack = "{\"k\":\"" + String(GATEWAY_KEY) + "\",\"id\":\"" + String(NODE_NAME) + "\",\"rw\":\"" + combined + "\"}";
+        String ack = "{\"k\":\"" + String(GATEWAY_KEY)
+                  + "\",\"id\":\"" + String(NODE_NAME)
+                  + "\",\"rw\":\"" + combined + "\"}";
 
-      const char* ackStr = ack.c_str();
-      lora.Send((uint8_t*)ackStr, ack.length(), SX126x_TXMODE_SYNC);
+        const char* ackStr = ack.c_str();
+        lora.Send((uint8_t*)ackStr, ack.length(), SX126x_TXMODE_SYNC);
+}
+
     }
 
   }
