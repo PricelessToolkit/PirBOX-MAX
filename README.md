@@ -62,7 +62,7 @@ Actual battery life will vary depending on battery quality, temperature, transmi
 4. In Config.h, change the sensor name, gateway key, Logic, and radio settings based on your gateway config
 
 > [!IMPORTANT]
->  Configure the "Logic" part correctly! Set Power "Battery" or "External", and if you don't need 2-way communication, set "TwoWayCom" to "False". All sensor logic depends on these settings.
+>  Configure the "Logic" part correctly! Set Power to "Battery" or "External", and if you don't need 2-way communication, set "TwoWayCom" to "False". All sensor logic depends on these settings.
 
 > [!IMPORTANT]  
 > The PirBOX LoRa module uses the sync word `0x1424`, which is equivalent to the CapiBridge's `0x12` sync word.
