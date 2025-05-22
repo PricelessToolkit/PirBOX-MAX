@@ -163,6 +163,30 @@ The **PirBOX-MAX** is equipped with **two Solid State Relays (SSR)** labeled **R
 Relay behavior can be configured in the `config.h` file. For example, to set how long a relay stays active after receiving a LoRa command:
 
 ```cpp
+
+
 #define TwoWayCom  "True"       // If True, after sending sensor data it will go into receiver mode and will wait "KeepPowerON_Time" for commands.
 #define RelayOn_Time     1      // How much time (in seconds) the relays will keep contact.
 ```
+
+## 🪛 Screw Terminal Wiring
+
+The **PirBOX-MAX** features a 12-pin screw terminal. Below is the pinout and description of each terminal:
+
+<img src="img/pcb_p2.jpg" width="410"/>
+
+| Pin # | Name         | Description                          |
+|-------|--------------|--------------------------------------|
+| 1     | BN           | Momentary Button Input (NO only)     |
+| 2     | BN           | Momentary Button Input (NO only)     |
+| 3     | S2           | Reed Switch 2 Input — No polarity    |
+| 4     | S2           | Reed Switch 2 Input — No polarity    |
+| 5     | S1           | Reed Switch 1 Input — No polarity    |
+| 6     | S1           | Reed Switch 1 Input — No polarity    |
+| 7     | R2           | Relay 2 — No polarity                |
+| 8     | R2           | Relay 2 — No polarity                |
+| 9     | R1           | Relay 1 — No polarit                 |
+| 10    | R1           | Relay 1 — No polarit                 |
+| 11    | GND          | GNG                                  |
+| 12    | 5V           | 5V input                             |
+
