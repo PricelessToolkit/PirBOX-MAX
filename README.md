@@ -77,10 +77,12 @@ Actual battery life will vary depending on battery quality, temperature, transmi
 
 //////////////////////////// Logic //////////////////////////////////////
 
-#define Power "Battery"           // Can be "Battery" or "External"
-#define TwoWayCom  "False"        // "True" or "False", If True, after sending sensor data, it will go into receiver mode and will wait "KeepPowerON_Time" for commands.
-#define KeepPowerON_Time 15       // Waiting xx seconds to receive command; if no command is received after KeepPowerON_Time it will power off.
-#define RelayOn_Time     1        // How much time relays will keep contact.
+#define Power "Battery"            // Can be "Battery" or "External"
+#define TwoWayCom  "False"         // "True" or "False", If True, after sending sensor data, it will go into receiver mode and will wait "KeepPowerON_Time" for commands.
+#define KeepPowerON_Time 15        // Waiting xx seconds to receive command; if no command is received after KeepPowerON_Time it will power off.
+#define RelayOn_Time     1         // How much time relays will keep contact.
+#define Invert_RSW1_Logic "false"  // If "true", Reed Switch 1 logic will be inverted (Normally Open / Normally Closed)
+#define Invert_RSW2_Logic "false"  // If "true", Reed Switch 2 logic will be inverted (Normally Open / Normally Closed)
 
 ////////////////////////////// LORA CONFIG //////////////////////////////
 
