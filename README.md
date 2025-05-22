@@ -22,6 +22,7 @@ Your subscription goes a long way in backing my work. If you feel more generous,
 - **LoRa-based communication** with **two-way support** for remote control and feedback  
 - **PIR Motion sensor** (Detected / Cleared) 
 - **Two reed switch inputs** (supports both Normally Open and Normally Closed configurations)
+- - Door and  Windows entities in Home Assistant
 - **Two SSR (solid-state relay) outputs** for controlling lights, gates, or other loads  
 - **One button input** perfect for use as a **doorbell-style button on a remote gate**  
 - **Screw terminals** for all inputs and outputs for secure and simple wiring  
