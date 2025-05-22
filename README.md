@@ -17,7 +17,7 @@ Your subscription goes a long way in backing my work. If you feel more generous,
 
 #### 🛒 Can be purchased in my shop http://www.PricelessToolkit.com
 
-### Key Features:
+### ✨ Key Features:
 - Seamless integration with **Home Assistant MQTT**  
 - **LoRa-based communication** with **two-way support** for remote control and feedback  
 - **PIR Motion sensor** (Detected / Cleared) 
@@ -52,7 +52,7 @@ Actual battery life will vary depending on battery quality, temperature, transmi
 - LoRa Gateway [CapiBridge](https://github.com/PricelessToolkit/CapiBridge)
 - 3 x AAA 1.5v Battery
 
-## Configuration / Reflashing:
+## ⚙️ Configuration / Reflashing:
 > [!NOTE]
 > By default, it comes already flashed and tested with the default firmware. Code"xy"
 
@@ -111,7 +111,7 @@ Actual battery life will vary depending on battery quality, temperature, transmi
 If your gateway and sensor are configured correctly, you should see under MQTT Devices "PIRBoxL" or the custom name you assigned in the config.h file. Once it's visible under MQTT Devices, the next step is to create an automation in Home Assistant to send a notification to your mobile phone.
 
 
-## Wiring
+## 🔌Wiring
 
 #### The PirBOX-MAX can be powered externally.
 
@@ -160,7 +160,7 @@ The **PirBOX-MAX** is equipped with **two Solid State Relays (SSR)** labeled **R
 - Each relay is rated for up to **2.5A** and is intended for **DC loads only**.
 - SSRs act like **simple on/off switches**, controlled via firmware settings.
 
-Relay behavior can be configured in the `config.h` file. For example, to set how long a relay stays active after being triggered:
+Relay behavior can be configured in the `config.h` file. For example, to set how long a relay stays active after receiving a LoRa command:
 
 ```cpp
 #define TwoWayCom  "True"       // If True, after sending sensor data it will go into receiver mode and will wait "KeepPowerON_Time" for commands.
