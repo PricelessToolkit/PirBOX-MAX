@@ -53,6 +53,10 @@ Actual battery life will vary depending on battery quality, temperature, transmi
 - [CapiBridge LoRa Gateway](https://github.com/PricelessToolkit/CapiBridge) for full functionality! or the one-way more affordable version [TTGO_Gateway](https://github.com/PricelessToolkit/TTGO_Gateway) *features and support is limited.
 - 3 x AAA 1.5v Battery.
 
+## 📣 Updates, Bugfixes, and Breaking Changes
+- 22.05.2025 - XOR obfuscation "Encryption" work in progress.
+
+
 ## ⚙️ Configuration / Reflashing:
 > [!NOTE]
 > By default, it comes already flashed and tested with the default firmware. Code"xy"
@@ -269,13 +273,4 @@ This project is open-source and includes Source code, 3D Print files, and Gerber
 > [!IMPORTANT]
 > **Do not use this system to control critical access points** such as your home’s main door or garage.  
 > This project is intended for **non-critical applications**, such as remotely controlling a farm or ranch gate, shed lights, or other low-risk devices in open environments.
-> 
-> This project does **not implement encrypted communication, only Separation with KEY** (so no AES-128 or other cryptographic protocols). All communication is transmitted **in plain text over the air** and can be intercepted using LoRa boards with the same radio configuration.
-> 
-> ### 🔍 Why encryption is not used:
-> - ✅ **Beginner-friendly**: Keeping the node code simple makes it easier to understand, modify, and deploy.
-> - 📦 **Smaller payloads**: Unencrypted messages are smaller, which improves efficiency and reduces transmission time.
-> - 👮 **Regulatory compliance**: The frequency band used may **not be authorized for encrypted communication** in some countries and could be subject to local restrictions.
-> - 📡 **Replay attacks exist anyway**: Even commercial systems like car key fobs are vulnerable to **replay attacks**, regardless of encryption.
->
-> But if I receive enough demand for encryption, I will implement it.
+
