@@ -57,7 +57,7 @@ Actual battery life will vary depending on battery quality, temperature, transmi
 - 22.05.2025 - XOR obfuscation "Encryption" work in progress.
 ```cpp
 #define Encryption true      // Global Payload obfuscation (Encryption)
-#define encryption_key 0x5A  // 1-byte XOR key, 0x00 to 0xFF (0 to 255 in decimal) (must match gateway key)
+#define encryption_key 0x5A  // 1-byte XOR key, 0x00 to 0xFF (0 to 255 in decimal)
 
 ```
 
