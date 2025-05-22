@@ -146,6 +146,16 @@ If your gateway and sensor are configured correctly, you should see under MQTT D
   </tr>
 </table>
 
+> [!NOTE]
+> Reed switch logic can be inverted in `config.h` by changing `false` to `true`.
+
+```cpp
+
+#define Invert_RSW1_Logic "false"  // If "true", Reed Switch 1 logic will be inverted.
+#define Invert_RSW2_Logic "false"  // If "true", Reed Switch 2 logic will be inverted.
+
+```
+
 ----------------------------
 
 ### Momentary Button Input
