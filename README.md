@@ -270,7 +270,7 @@ This project is open-source and includes Source code, 3D Print files, and Gerber
 > **Do not use this system to control critical access points** such as your home’s main door or garage.  
 > This project is intended for **non-critical applications**, such as remotely controlling a farm or ranch gate, shed lights, or other low-risk devices in open environments.
 > 
-> This project does **not implement any form of secure or encrypted communication** (e.g., AES-128 or other cryptographic protocols). All communication is transmitted **in plain text over the air** and can be intercepted using LoRa boards with the same radio configuration.
+> This project does **not implement encrypted communication, only Separation with KEY** (so no AES-128 or other cryptographic protocols). All communication is transmitted **in plain text over the air** and can be intercepted using LoRa boards with the same radio configuration.
 > 
 > ### 🔍 Why encryption is not used:
 > - ✅ **Beginner-friendly**: Keeping the node code simple makes it easier to understand, modify, and deploy.
