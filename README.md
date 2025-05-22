@@ -105,7 +105,7 @@ Actual battery life will vary depending on battery quality, temperature, transmi
 > [!NOTE]
 > To access the USB port, unscrew the housing. The port is hidden inside and is not intended for use while batteries are installed.
 
-7. In Arduino IDE, select the COM Port and programmer "SerialUPDI-230400 baud "Required UPDI Programmer"
+7. In Arduino IDE, select the COM Port and programmer "SerialUPDI-230400 baud
 8. Click "Upload Using Programmer" or "Ctrl + Shift + U", Done!
 
 If your gateway and sensor are configured correctly, you should see under MQTT Devices "PIRBoxL" or the custom name you assigned in the config.h file. Once it's visible under MQTT Devices, the next step is to create an automation in Home Assistant to send a notification to your mobile phone.
