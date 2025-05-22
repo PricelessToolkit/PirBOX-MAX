@@ -50,16 +50,13 @@ Actual battery life will vary depending on battery quality, temperature, transmi
 
 
 ### Required:
-- [CapiBridge LoRa Gateway](https://github.com/PricelessToolkit/CapiBridge) for full functionality! or the one-way more affordable version [TTGO_Gateway](https://github.com/PricelessToolkit/TTGO_Gateway) *features and support is limited.
+- [CapiBridge LoRa Gateway](https://github.com/PricelessToolkit/CapiBridge) for 2-Way communication and Encryption, or the one-way more affordable version [TTGO_Gateway](https://github.com/PricelessToolkit/TTGO_Gateway) *no Encryption and support is limited.
 - 3 x AAA 1.5v Battery.
 
 ### 📣 Updates, Bugfixes, and Breaking Changes
-- 22.05.2025 - XOR obfuscation "Encryption" work in progress.
-```cpp
-#define Encryption true      // Global Payload obfuscation (Encryption)
-#define encryption_key 0x5A  // 1-byte XOR key, 0x00 to 0xFF (0 to 255 in decimal)
+- 22.05.2025 - Breaking Change (XOR obfuscation "Encryption" for LoRa).
+- - CapiBridge firmware needs to be updated.
 
-```
 
 ## ⚙️ Configuration / Reflashing:
 > [!NOTE]
@@ -82,20 +79,26 @@ The configuration file is self-explanatory, each setting is clearly commented. I
 
 /////////////////////////// LoRa Gateway Key ///////////////////////////
 
-#define GATEWAY_KEY "xy"          // Keep it Short
-#define NODE_NAME "PirBoxM"       // Sensor Name which will be visible in Home Assistant
+#define GATEWAY_KEY "xy"                           // Separation Key "Keep it Short 2 letters is enough"
+#define NODE_NAME "PirBoxM"                        // Sensor Name which will be visible in Home Assistant
+#define Encryption true                            // Global Payload obfuscation (Encryption)
+#define encryption_key_length 4                    // must match number of bytes in the XOR key array
+#define encryption_key { 0x4B, 0xA3, 0x3F, 0x9C }  // Multi-byte XOR key (between 2–16 values).
+                                                   // Use random-looking HEX values (from 0x00 to 0xFF).
+                                                   // Must match exactly on both sender and receiver.
+                                                   // Example: { 0x1F, 0x7E, 0xC2, 0x5A }  ➜ 4-byte key.
 
-//////////////////////////// Logic //////////////////////////////////////
+/////////////////////////// Logic Config //////////////////////////////////
 
-#define Power             "Battery"  // Can be "Battery" or "External"
-#define TwoWayCom         "false"    // "true" or "false", If true, after sending sensor data, it will go into receiver mode and will wait "KeepPowerON_Time" for commands.
-#define KeepPowerON_Time   15        // Waiting xx seconds to receive command; if no command is received after KeepPowerON_Time it will power off.
-#define RelayOn_Time       1         // How much time relays will keep contact.
-#define Command_ACK       "false"    // Acknowledgement of received command (if "true" Sends back relay command "01","10" or "11")
-#define Invert_RSW1_Logic "false"    // If "true", Reed Switch 1 logic will be inverted.
-#define Invert_RSW2_Logic "false"    // If "true", Reed Switch 2 logic will be inverted.
+#define Power              "Battery"     // Can be "Battery" or "External"
+#define TwoWayCom          "true"       // "true" or "false", If true, after sending sensor data it will go into receiver mode and will wait "KeepPowerON_Time" for commands.
+#define KeepPowerON_Time   5            // Waiting xx seconds to receive command; if no command is received after KeepPowerON_Time it will power off.
+#define RelayOn_Time       1             // How much time relays will keep contact.
+#define Command_ACK        "true"       // Acknowledgement of received command (if "true" Sends back relay command "01","10" or "11")
+#define Invert_RSW1_Logic  "false"       // If "true", Reed Switch 1 logic will be inverted (Normally Open / Normally Closed)
+#define Invert_RSW2_Logic  "false"       // If "true", Reed Switch 2 logic will be inverted (Normally Open / Normally Closed)
 
-////////////////////////////// LORA CONFIG //////////////////////////////
+////////////////////////////// LORA CONFIG ////////////////////////////////////
 
 
 #define BAND                      868E6     // 433E6 MHz or 868E6 MHz or 915E6 MHz
