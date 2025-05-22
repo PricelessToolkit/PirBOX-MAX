@@ -51,3 +51,61 @@ Actual battery life will vary depending on battery quality, temperature, transmi
 ### Required:
 - LoRa Gateway [CapiBridge](https://github.com/PricelessToolkit/CapiBridge)
 - 3 x AAA 1.5v Battery
+
+### Configuration / Reflashing:
+> [!NOTE]
+> By default, it comes already flashed and tested with the default firmware. Code"xy"
+
+1. Install `MegaTinyCore` in Arduino IDE "http://drazzy.com/package_drazzy.com_index.json"
+2. Download the PirBOX-MAX project file; don't just copy and paste the code.
+3. Open the PirBox-MAX.ino file in Arduino IDE. "It will include all necessary files and Radio Library."
+4. In Config.h, change the sensor name, gateway key, Logic, and radio settings based on your gateway config
+
+> [!IMPORTANT]
+>  Configure the "Logic" part correctly! Set Power "Battery" or "External", and if you don't need 2-way communication, set "TwoWayCom" to "False". All sensor logic depends on these settings.
+
+> [!IMPORTANT]  
+> The PirBOX LoRa module uses the sync word `0x1424`, which is equivalent to the CapiBridge's `0x12` sync word.
+
+```c
+
+/////////////////////////// LoRa Gateway Key ///////////////////////////
+
+#define GATEWAY_KEY "xy"          // Keep it Short
+#define NODE_NAME "PirBoxM"       // Sensor Name which will be visible in Home Assistant
+
+//////////////////////////// Logic //////////////////////////////////////
+
+#define Power "Battery"           // Can be "Battery" or "External"
+#define TwoWayCom  "False"        // "True" or "False", If True, after sending sensor data, it will go into receiver mode and will wait "KeepPowerON_Time" for commands.
+#define KeepPowerON_Time 15       // Waiting xx seconds to receive command; if no command is received after KeepPowerON_Time it will power off.
+#define RelayOn_Time     1        // How much time relays will keep contact.
+
+////////////////////////////// LORA CONFIG //////////////////////////////
+
+
+#define BAND                      868E6     // 433E6 MHz or 868E6 MHz or 915E6 MHz
+#define TX_OUTPUT_POWER           20        // dBm tx output power
+#define LORA_BANDWIDTH            4         // bandwidth 2: 31.25Khz, 3: 62.5Khz, 4: 125Khz, 5: 250KHZ, 6: 500Khz
+#define LORA_SPREADING_FACTOR     8         // spreading factor 6-12 [SF5..SF12]
+#define LORA_CODINGRATE           1         // [1: 4/5, 2: 4/6, 3: 4/7, 4: 4/8]
+#define LORA_PREAMBLE_LENGTH      6         // Same for Tx and Rx
+#define LORA_PAYLOADLENGTH        0         // 0: Variable length packet (explicit header),  1..255 for Fixed length packet (implicit header)
+#define LORA_CRC_ON               true
+#define LORA_SYNC_WORD            0x1424    // The 0x1424 private sync word is equivalent to the CapiBridge 0x12 sync word.
+
+```
+
+5. Select board configuration as shown below.
+
+<img src="img/arduino_board_config.jpg"/>
+
+6. Disconnect the Battery if connected. Then connect the USB cable to the PirBOX-Max.
+
+> [!NOTE]
+> To access the USB port, unscrew the housing. The port is hidden inside and is not intended for use while batteries are installed.
+
+7. In Arduino IDE, select the COM Port and programmer "SerialUPDI-230400 baud "Required UPDI Programmer"
+8. Click "Upload Using Programmer" or "Ctrl + Shift + U", Done!
+
+If your gateway and sensor are configured correctly, you should see under MQTT Devices "PIRBoxL" or the custom name you assigned in the config.h file. Once it's visible under MQTT Devices, the next step is to create an automation in Home Assistant to send a notification to your mobile phone.
