@@ -277,3 +277,5 @@ This project is open-source and includes Source code, 3D Print files, and Gerber
 > - 📦 **Smaller payloads**: Unencrypted messages are smaller, which improves efficiency and reduces transmission time.
 > - 👮 **Regulatory compliance**: The frequency band used may **not be authorized for encrypted communication** in some countries and could be subject to local restrictions.
 > - 📡 **Replay attacks exist anyway**: Even commercial systems like car key fobs are vulnerable to **replay attacks**, regardless of encryption.
+>
+> But if I receive enough demand for encryption, I will implement it.
