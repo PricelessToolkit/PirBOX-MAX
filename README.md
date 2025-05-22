@@ -174,7 +174,7 @@ Relay behavior can be configured in the `config.h` file. For example, to set how
 
 ----------------------------
 
-## 🪛 Screw Terminal Wiring
+## 🪛 Screw Terminal Pinout
 
 The **PirBOX-MAX** features a 12-pin screw terminal. Below is the pinout and description of each terminal:
 
