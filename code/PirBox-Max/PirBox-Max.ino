@@ -214,11 +214,11 @@ void loop() {
     int currentRSW2 = digitalRead(RSW_PIN_2);
 
     // Invert logic if defined as "true"
-    if (String(INVERT_RSW1_LOGIC) == "true") {
+    if (String(Invert_RSW1_Logic) == "true") {
       currentRSW1 = !currentRSW1;
     }
 
-    if (String(INVERT_RSW2_LOGIC) == "true") {
+    if (String(Invert_RSW2_Logic) == "true") {
       currentRSW2 = !currentRSW2;
     }
 
