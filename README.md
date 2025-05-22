@@ -201,6 +201,8 @@ The **PirBOX-MAX** features a 12-pin screw terminal. Below is the pinout and des
 # Prefer to build it on your own?
 This project is open-source and includes Source code, 3D Print files, and Gerber files, allowing you to order blank PCBs and assemble the PirBOX-Lite yourself. To help with manual assembly, I've included an Interactive HTML BOM in the PCB folder. This tool shows the placement and polarity of each component, helping to eliminate errors during soldering.
 
+<img src="img\ibom.jpg"/>
+
 > [!NOTE]
 >  Please note that POS (Pick and Place) files and KiCad source files are not included. These are intentionally omitted, as this project is intended for manual assembly. If you prefer a ready-to-use solution, you can purchase one directly from my shop: https://www.pricelesstoolkit.com.
 
