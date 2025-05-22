@@ -52,7 +52,7 @@ Actual battery life will vary depending on battery quality, temperature, transmi
 - LoRa Gateway [CapiBridge](https://github.com/PricelessToolkit/CapiBridge)
 - 3 x AAA 1.5v Battery
 
-### Configuration / Reflashing:
+## Configuration / Reflashing:
 > [!NOTE]
 > By default, it comes already flashed and tested with the default firmware. Code"xy"
 
@@ -67,7 +67,7 @@ Actual battery life will vary depending on battery quality, temperature, transmi
 > [!IMPORTANT]  
 > The PirBOX LoRa module uses the sync word `0x1424`, which is equivalent to the CapiBridge's `0x12` sync word.
 
-```c
+```cpp
 
 /////////////////////////// LoRa Gateway Key ///////////////////////////
 
@@ -109,3 +109,60 @@ Actual battery life will vary depending on battery quality, temperature, transmi
 8. Click "Upload Using Programmer" or "Ctrl + Shift + U", Done!
 
 If your gateway and sensor are configured correctly, you should see under MQTT Devices "PIRBoxL" or the custom name you assigned in the config.h file. Once it's visible under MQTT Devices, the next step is to create an automation in Home Assistant to send a notification to your mobile phone.
+
+
+## Wiring
+
+#### The PirBOX-MAX can be powered externally.
+
+- Connect **5V** to the **5V** pin.
+- Connect **Ground** to the **GND** pin.
+- A power supply providing **at least 150mA** is sufficient for stable operation.
+
+> [!IMPORTANT] 
+> If you choose to power the PirBOX-MAX using an external power source, **remove the batteries before connecting** the external power.  
+> Also, ensure that you set the power configuration in `config.h` as shown below:
+
+```cpp
+#define Power "External" 
+```
+
+#### The **PirBOX-MAX** supports two types of reed switches:
+- **Normally Open (NO):** The circuit is open when idle and closes when activated.
+- **Normally Closed (NC):** The circuit is closed when idle and opens when activated.
+
+<table>
+  <tr>
+    <td align="center"><b>Normally Open (NO)</b></td>
+    <td align="center"><b>Normally Closed (NC)</b></td>
+  </tr>
+  <tr>
+    <td><img src="img/NO.jpg" alt="Normally Open Reed Switch" width="300"/></td>
+    <td><img src="img/NC.jpg" alt="Normally Closed Reed Switch" width="300"/></td>
+  </tr>
+</table>
+
+#### Momentary Button Input
+
+The **PirBOX-MAX** includes support for a **momentary button input**, designed specifically for **Normally Open (NO)** buttons.
+
+- This input **cannot be used with reed switches**.
+- Compatible with common **doorbell-style** buttons **without internal lighting**, or any standard **momentary push-button**.
+- The input is triggered when the button is pressed and held briefly.
+
+> [!NOTE]
+> The input is **not read at high speed**. The typical read interval is **200ms or more**, making it suitable for normal human finger presses, not for fast electronic switching or bounce-sensitive applications.
+
+#### Relays
+
+The **PirBOX-MAX** is equipped with **two Solid State Relays (SSR)** labeled **R1** and **R2**.
+
+- Each relay is rated for up to **2.5A** and is intended for **DC loads only**.
+- SSRs act like **simple on/off switches**, controlled via firmware settings.
+
+Relay behavior can be configured in the `config.h` file. For example, to set how long a relay stays active after being triggered:
+
+```cpp
+#define TwoWayCom  "True"       // If True, after sending sensor data it will go into receiver mode and will wait "KeepPowerON_Time" for commands.
+#define RelayOn_Time     1      // How much time (in seconds) the relays will keep contact.
+```
