@@ -193,6 +193,6 @@ The **PirBOX-MAX** features a 12-pin screw terminal. Below is the pinout and des
 | 8     | R2           | Relay 2 — No polarity                |
 | 9     | R1           | Relay 1 — No polarit                 |
 | 10    | R1           | Relay 1 — No polarit                 |
-| 11    | GND          | GNG                                  |
-| 12    | 5V           | 5V input                             |
+| 11    | GND          | GND                                  |
+| 12    | 5V           | 5V input,  "At least 150mA"          |
 
