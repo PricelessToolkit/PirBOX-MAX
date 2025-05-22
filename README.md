@@ -191,8 +191,8 @@ The **PirBOX-MAX** features a 12-pin screw terminal. Below is the pinout and des
 | 6     | S1           | Reed Switch 1 Input — No polarity    |
 | 7     | R2           | Relay 2 — No polarity                |
 | 8     | R2           | Relay 2 — No polarity                |
-| 9     | R1           | Relay 1 — No polarit                 |
-| 10    | R1           | Relay 1 — No polarit                 |
+| 9     | R1           | Relay 1 — No polarity                |
+| 10    | R1           | Relay 1 — No polarity                |
 | 11    | GND          | GND                                  |
 | 12    | 5V           | 5V input,  "At least 150mA"          |
 
