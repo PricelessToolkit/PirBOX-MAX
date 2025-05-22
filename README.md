@@ -59,7 +59,7 @@ Actual battery life will vary depending on battery quality, temperature, transmi
 
 1. Install `MegaTinyCore` in Arduino IDE by adding this URL "http://drazzy.com/package_drazzy.com_index.json" into "File > Preferences > Additional boards manager URLs".
 2. Download the PirBOX-MAX project file; don't just copy and paste the code.
-3. Open the PirBox-MAX.ino file in Arduino IDE. "It will include all necessary files and Radio Library."
+3. Open the PirBox-MAX.ino file with Arduino IDE. "It will include all necessary files and Radio Library."
 4. In Config.h, change the sensor name, gateway key, Logic, and radio settings based on your gateway config
 
 > [!IMPORTANT]
