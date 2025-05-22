@@ -50,8 +50,8 @@ Actual battery life will vary depending on battery quality, temperature, transmi
 
 
 ### Required:
-- LoRa Gateway [CapiBridge](https://github.com/PricelessToolkit/CapiBridge)
-- 3 x AAA 1.5v Battery
+- LoRa Gateway [CapiBridge](https://github.com/PricelessToolkit/CapiBridge) for full functionality or the one-way version [LilyGo LoRa Board](https://github.com/PricelessToolkit/TTGO_Gateway) *not all features are available.
+- 3 x AAA 1.5v Battery.
 
 ## ⚙️ Configuration / Reflashing:
 > [!NOTE]
