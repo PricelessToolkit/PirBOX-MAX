@@ -117,7 +117,7 @@ The configuration file is self-explanatory, each setting is clearly commented. I
 If your gateway and sensor are configured correctly, you should see under MQTT Devices "PIRBoxL" or the custom name you assigned in the config.h file. Once it's visible under MQTT Devices, the next step is to create an automation in Home Assistant to send a notification to your mobile phone.
 
 
-## 🔌Wiring
+## 🔌Inputs / Outputs
 
 ### The PirBOX-MAX can be powered externally.
 
@@ -187,6 +187,38 @@ Relay behavior can be configured in the `config.h` file. For example, to set how
 #define TwoWayCom  "True"       // If True, after sending sensor data it will go into receiver mode and will wait "KeepPowerON_Time" for commands.
 #define RelayOn_Time     1      // How much time (in seconds) the relays will keep contact.
 ```
+
+To send a command to PirBOX-MAX via **LoRa**, publish a JSON payload to the following MQTT topic:
+
+> [!NOTE]
+> Require [CapiBridge Gateway](https://github.com/PricelessToolkit/CapiBridge) *Supports 2-Way Comunication
+
+```
+homeassistant/sensor/CapiBridge/command
+```
+
+Payload
+
+```json
+{"k":"xy","id":"PirBoxM","com":"11"}
+```
+
+Descriptions
+
+| Key   | Description                   | Example     |
+|--------|-------------------------------|-------------|
+| `k`    | Private gateway key (auth)     | `"xy"`      |
+| `id`   | Target node name (device ID)   | `"PirBoxM"` |
+| `com`  | Command (text)   | `"xx"`      |
+
+Command Reference
+
+| Command | Action                         |
+|---------|--------------------------------|
+| `10`    | Activates Relay 1 (R1)         |
+| `01`    | Activates Relay 2 (R2)         |
+| `11`    | Activates both Relay 1 and R2  |
+
 
 ----------------------------
 
