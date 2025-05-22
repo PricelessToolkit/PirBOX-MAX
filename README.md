@@ -50,7 +50,7 @@ Actual battery life will vary depending on battery quality, temperature, transmi
 
 
 ### Required:
-- LoRa Gateway [CapiBridge](https://github.com/PricelessToolkit/CapiBridge) for full functionality or the one-way version [TTGO_Gateway](https://github.com/PricelessToolkit/TTGO_Gateway) *not all features are available.
+- [CapiBridge LoRa Gateway](https://github.com/PricelessToolkit/CapiBridge) for full functionality! or the one-way more affordable version [TTGO_Gateway](https://github.com/PricelessToolkit/TTGO_Gateway) *features and support is limited.
 - 3 x AAA 1.5v Battery.
 
 ## ⚙️ Configuration / Reflashing:
