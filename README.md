@@ -68,6 +68,8 @@ Actual battery life will vary depending on battery quality, temperature, transmi
 > [!IMPORTANT]  
 > The PirBOX LoRa module uses the sync word `0x1424`, which is equivalent to the CapiBridge's `0x12` sync word.
 
+The configuration file is self-explanatory, each setting is clearly commented. If you take a moment to read through the comments, everything should be clear without requiring further explanation.
+
 ```cpp
 
 /////////////////////////// LoRa Gateway Key ///////////////////////////
@@ -77,10 +79,13 @@ Actual battery life will vary depending on battery quality, temperature, transmi
 
 //////////////////////////// Logic //////////////////////////////////////
 
-#define Power "Battery"           // Can be "Battery" or "External"
-#define TwoWayCom  "False"        // "True" or "False", If True, after sending sensor data, it will go into receiver mode and will wait "KeepPowerON_Time" for commands.
-#define KeepPowerON_Time 15       // Waiting xx seconds to receive command; if no command is received after KeepPowerON_Time it will power off.
-#define RelayOn_Time     1        // How much time relays will keep contact.
+#define Power             "Battery"  // Can be "Battery" or "External"
+#define TwoWayCom         "false"    // "true" or "false", If true, after sending sensor data, it will go into receiver mode and will wait "KeepPowerON_Time" for commands.
+#define KeepPowerON_Time   15        // Waiting xx seconds to receive command; if no command is received after KeepPowerON_Time it will power off.
+#define RelayOn_Time       1         // How much time relays will keep contact.
+#define Command_ACK       "false"    // Acknowledgement of received command (if "true" Sends back relay command "01","10" or "11")
+#define Invert_RSW1_Logic "false"    // If "true", Reed Switch 1 logic will be inverted.
+#define Invert_RSW2_Logic "false"    // If "true", Reed Switch 2 logic will be inverted.
 
 ////////////////////////////// LORA CONFIG //////////////////////////////
 
@@ -112,7 +117,7 @@ Actual battery life will vary depending on battery quality, temperature, transmi
 If your gateway and sensor are configured correctly, you should see under MQTT Devices "PIRBoxL" or the custom name you assigned in the config.h file. Once it's visible under MQTT Devices, the next step is to create an automation in Home Assistant to send a notification to your mobile phone.
 
 
-## 🔌Wiring
+## 🔌Inputs / Outputs
 
 ### The PirBOX-MAX can be powered externally.
 
@@ -144,6 +149,16 @@ If your gateway and sensor are configured correctly, you should see under MQTT D
   </tr>
 </table>
 
+> [!NOTE]
+> Reed switch logic can be inverted in `config.h` by changing `false` to `true`.
+
+```cpp
+
+#define Invert_RSW1_Logic "false"  // If "true", Reed Switch 1 logic will be inverted.
+#define Invert_RSW2_Logic "false"  // If "true", Reed Switch 2 logic will be inverted.
+
+```
+
 ----------------------------
 
 ### Momentary Button Input
@@ -173,6 +188,38 @@ Relay behavior can be configured in the `config.h` file. For example, to set how
 #define RelayOn_Time     1      // How much time (in seconds) the relays will keep contact.
 ```
 
+To send a command to PirBOX-MAX via **LoRa**, publish a JSON payload to the following MQTT topic:
+
+> [!NOTE]
+> Require [CapiBridge Gateway](https://github.com/PricelessToolkit/CapiBridge) *Supports 2-Way Comunication
+
+```
+homeassistant/sensor/CapiBridge/command
+```
+
+Payload
+
+```json
+{"k":"xy","id":"PirBoxM","com":"11"}
+```
+
+Descriptions
+
+| Key   | Description                   | Example     |
+|--------|-------------------------------|-------------|
+| `k`    | Private gateway key (auth)     | `"xy"`      |
+| `id`   | Target node name (device ID)   | `"PirBoxM"` |
+| `com`  | Command (text)   | `"xx"`      |
+
+Command Reference
+
+| Command | Action                         |
+|---------|--------------------------------|
+| `10`    | Activates Relay 1 (R1)         |
+| `01`    | Activates Relay 2 (R2)         |
+| `11`    | Activates both Relay 1 and R2  |
+
+
 ----------------------------
 
 ## 🪛 Screw Terminal Pinout
@@ -196,9 +243,18 @@ The **PirBOX-MAX** features a 12-pin screw terminal. Below is the pinout and des
 | 11    | GND          | GND                                  |
 | 12    | 5V           | 5V input,  "At least 150mA"          |
 
+----------------------------
 
 
-# Prefer to build it on your own?
+
+# 🛠️ Prefer to build it on your own?
+
+### Schematic
+<details>
+  <summary>View schematic. Click here</summary>
+<img src="PCB/PirBOX-MAX_Schematic.jpg"/>
+</details>
+
 This project is open-source and includes Source code, 3D Print files, and Gerber files, allowing you to order blank PCBs and assemble the PirBOX-Lite yourself. To help with manual assembly, I've included an Interactive HTML BOM in the PCB folder. This tool shows the placement and polarity of each component, helping to eliminate errors during soldering.
 
 <img src="img\ibom.jpg"/>
@@ -206,8 +262,18 @@ This project is open-source and includes Source code, 3D Print files, and Gerber
 > [!NOTE]
 >  Please note that POS (Pick and Place) files and KiCad source files are not included. These are intentionally omitted, as this project is intended for manual assembly. If you prefer a ready-to-use solution, you can purchase one directly from my shop: https://www.pricelesstoolkit.com.
 
-## Schematic
-<details>
-  <summary>View schematic. Click here</summary>
-<img src="PCB/PirBOX-MAX_Schematic.jpg"/>
-</details>
+----------------------------
+
+### Disclaimer & Security Notice
+
+> [!IMPORTANT]
+> **Do not use this system to control critical access points** such as your home’s main door or garage.  
+> This project is intended for **non-critical applications**, such as remotely controlling a farm or ranch gate, shed lights, or other low-risk devices in open environments.
+> 
+> This project does **not implement encrypted communication, only Separation with KEY** (so no AES-128 or other cryptographic protocols). All communication is transmitted **in plain text over the air** and can be intercepted using LoRa boards with the same radio configuration.
+> 
+> ### 🔍 Why encryption is not used:
+> - ✅ **Beginner-friendly**: Keeping the node code simple makes it easier to understand, modify, and deploy.
+> - 📦 **Smaller payloads**: Unencrypted messages are smaller, which improves efficiency and reduces transmission time.
+> - 👮 **Regulatory compliance**: The frequency band used may **not be authorized for encrypted communication** in some countries and could be subject to local restrictions.
+> - 📡 **Replay attacks exist anyway**: Even commercial systems like car key fobs are vulnerable to **replay attacks**, regardless of encryption.
