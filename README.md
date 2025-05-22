@@ -113,7 +113,7 @@ If your gateway and sensor are configured correctly, you should see under MQTT D
 
 ## 🔌Wiring
 
-#### The PirBOX-MAX can be powered externally.
+### The PirBOX-MAX can be powered externally.
 
 - Connect **5V** to the **5V** pin.
 - Connect **Ground** to the **GND** pin.
@@ -126,8 +126,9 @@ If your gateway and sensor are configured correctly, you should see under MQTT D
 ```cpp
 #define Power "External" 
 ```
+----------------------------
 
-#### The **PirBOX-MAX** supports two types of reed switches:
+### The **PirBOX-MAX** supports two types of reed switches:
 - **Normally Open (NO):** The circuit is open when idle and closes when activated.
 - **Normally Closed (NC):** The circuit is closed when idle and opens when activated.
 
@@ -142,7 +143,9 @@ If your gateway and sensor are configured correctly, you should see under MQTT D
   </tr>
 </table>
 
-#### Momentary Button Input
+----------------------------
+
+### Momentary Button Input
 
 The **PirBOX-MAX** includes support for a **momentary button input**, designed specifically for **Normally Open (NO)** buttons.
 
@@ -152,8 +155,8 @@ The **PirBOX-MAX** includes support for a **momentary button input**, designed s
 
 > [!NOTE]
 > The input is **not read at high speed**. The typical read interval is **200ms or more**, making it suitable for normal human finger presses, not for fast electronic switching or bounce-sensitive applications.
-
-#### Relays
+----------------------------
+### Relays
 
 The **PirBOX-MAX** is equipped with **two Solid State Relays (SSR)** labeled **R1** and **R2**.
 
@@ -168,6 +171,8 @@ Relay behavior can be configured in the `config.h` file. For example, to set how
 #define TwoWayCom  "True"       // If True, after sending sensor data it will go into receiver mode and will wait "KeepPowerON_Time" for commands.
 #define RelayOn_Time     1      // How much time (in seconds) the relays will keep contact.
 ```
+
+----------------------------
 
 ## 🪛 Screw Terminal Wiring
 
