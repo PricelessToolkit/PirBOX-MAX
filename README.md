@@ -60,7 +60,7 @@ Actual battery life will vary depending on battery quality, temperature, transmi
 
 ## ⚙️ Configuration / Reflashing:
 > [!NOTE]
-> By default, it comes already flashed and tested with the default firmware. Code"xy"
+> By default, it comes already flashed and tested with the default firmware. Code"xy" and encryption_key { 0x4B, 0xA3, 0x3F, 0x9C }
 
 1. Install `MegaTinyCore` in Arduino IDE by adding this URL "http://drazzy.com/package_drazzy.com_index.json" into "File > Preferences > Additional boards manager URLs".
 2. Download the PirBOX-MAX project file; don't just copy and paste the code.
