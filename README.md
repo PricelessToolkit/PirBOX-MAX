@@ -125,7 +125,7 @@ The configuration file is self-explanatory, each setting is clearly commented. I
 7. In Arduino IDE, select the COM Port and programmer "SerialUPDI-230400 baud
 8. Click "Upload Using Programmer" or "Ctrl + Shift + U", Done!
 
-If your gateway and sensor are configured correctly, you should see under MQTT Devices "PIRBoxL" or the custom name you assigned in the config.h file. Once it's visible under MQTT Devices, the next step is to create an automation in Home Assistant to send a notification to your mobile phone.
+If your gateway and sensor are configured correctly, you should see under MQTT Devices "PIRBoxM" or the custom name you assigned in the config.h file. Once it's visible under MQTT Devices, the next step is to create an automation in Home Assistant to send a notification to your mobile phone.
 
 
 ## 🔌Inputs / Outputs
@@ -266,7 +266,7 @@ The **PirBOX-MAX** features a 12-pin screw terminal. Below is the pinout and des
 <img src="PCB/PirBOX-MAX_Schematic.jpg"/>
 </details>
 
-This project is open-source and includes Source code, 3D Print files, and Gerber files, allowing you to order blank PCBs and assemble the PirBOX-Lite yourself. To help with manual assembly, I've included an Interactive HTML BOM in the PCB folder. This tool shows the placement and polarity of each component, helping to eliminate errors during soldering.
+This project is open-source and includes Source code, 3D Print files, and Gerber files, allowing you to order blank PCBs and assemble the PirBOX-MAX yourself. To help with manual assembly, I've included an Interactive HTML BOM in the PCB folder. This tool shows the placement and polarity of each component, helping to eliminate errors during soldering.
 
 <img src="img\ibom.jpg"/>
 
