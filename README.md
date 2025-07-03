@@ -33,7 +33,7 @@ Your subscription goes a long way in backing my work. If you feel more generous,
 
 
 > [!NOTE]
-> **Not intended** for indoor use or high traffic areas, Zigbee devices are better suited for that.  
+> **Not intended** for close proximity use or in high-traffic areas, Zigbee devices are better suited for those applications.
 
 ### 📋 Power Consumption Table
 Measured by "Power Profiler KIT 2"
@@ -60,7 +60,7 @@ Actual battery life will vary depending on battery quality, temperature, transmi
 
 ## ⚙️ Configuration / Reflashing:
 > [!NOTE]
-> By default, it comes already flashed and tested with the default firmware. Code"xy"
+> By default, it comes already flashed and tested with the default firmware. Code"xy" and encryption_key { 0x4B, 0xA3, 0x3F, 0x9C }
 
 1. Install `MegaTinyCore` in Arduino IDE by adding this URL "http://drazzy.com/package_drazzy.com_index.json" into "File > Preferences > Additional boards manager URLs".
 2. Download the PirBOX-MAX project file; don't just copy and paste the code.
@@ -125,7 +125,7 @@ The configuration file is self-explanatory, each setting is clearly commented. I
 7. In Arduino IDE, select the COM Port and programmer "SerialUPDI-230400 baud
 8. Click "Upload Using Programmer" or "Ctrl + Shift + U", Done!
 
-If your gateway and sensor are configured correctly, you should see under MQTT Devices "PIRBoxL" or the custom name you assigned in the config.h file. Once it's visible under MQTT Devices, the next step is to create an automation in Home Assistant to send a notification to your mobile phone.
+If your gateway and sensor are configured correctly, you should see under MQTT Devices "PIRBoxM" or the custom name you assigned in the config.h file. Once it's visible under MQTT Devices, the next step is to create an automation in Home Assistant to send a notification to your mobile phone.
 
 
 ## 🔌Inputs / Outputs
@@ -266,7 +266,7 @@ The **PirBOX-MAX** features a 12-pin screw terminal. Below is the pinout and des
 <img src="PCB/PirBOX-MAX_Schematic.jpg"/>
 </details>
 
-This project is open-source and includes Source code, 3D Print files, and Gerber files, allowing you to order blank PCBs and assemble the PirBOX-Lite yourself. To help with manual assembly, I've included an Interactive HTML BOM in the PCB folder. This tool shows the placement and polarity of each component, helping to eliminate errors during soldering.
+This project is open-source and includes Source code, 3D Print files, and Gerber files, allowing you to order blank PCBs and assemble the PirBOX-MAX yourself. To help with manual assembly, I've included an Interactive HTML BOM in the PCB folder. This tool shows the placement and polarity of each component, helping to eliminate errors during soldering.
 
 <img src="img\ibom.jpg"/>
 
