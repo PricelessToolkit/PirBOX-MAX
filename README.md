@@ -10,7 +10,19 @@ Your subscription goes a long way in backing my work. If you feel more generous,
 
 ## PirBOX-MAX and [PirBOX-LITE](https://github.com/PricelessToolkit/PirBOX-LITE)
 
-**PirBOX-MAX** is an Open-Source, compact, low-power LoRa-based PIR motion sensor designed for long-range applications such as basements, underground garages/parking areas, and remote sheds. In addition to motion detection, PirBOX-MAX features inputs for reed switches, SSR (solid-state relay) control, and a push-button input, enabling it to monitor doors/windows, control loads, or be used as a remote gate sensor and doorbell.
+
+
+
+<table>
+<tr>
+<td><img src="img/assam.jpg" alt="PirBOX-MAX" style="max-width:100px; height:auto;"></td>
+<td>
+
+**PirBOX-MAX** is an Open-Source, compact, low-power LoRa-based PIR motion sensor designed for long-range applications such as basements, underground garages/parking areas, and remote sheds. In addition to motion detection, PirBOX-MAX features **inputs for reed switches, SSR (solid-state relay) control, and a push-button input**, enabling it to monitor doors/windows, control loads, or be used as a remote gate sensor and doorbell.
+
+</td>
+</tr>
+</table>
 
 
 <img src="img/ha.png"/>
