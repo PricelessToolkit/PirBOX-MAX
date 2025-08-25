@@ -32,7 +32,7 @@
 
 
 #define LORA_BANDWIDTH            5         // bandwidth 2: 31.25Khz, 3: 62.5Khz, 4: 125Khz, 5: 250KHZ, 6: 500Khz
-#define LORA_SPREADING_FACTOR     10         // spreading factor 6-12 [SF5..SF12]
+#define LORA_SPREADING_FACTOR     10         // spreading factor 5-11 [SF5..SF11]
 #define LORA_CODINGRATE           1         // [1: 4/5, 2: 4/6, 3: 4/7, 4: 4/8]
 #define LORA_PREAMBLE_LENGTH      12         // Same for Tx and Rx
 #define LORA_PAYLOADLENGTH        0         // 0: Variable length packet (explicit header),  1..255 for Fixed length packet (implicit header)
