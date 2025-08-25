@@ -44,22 +44,6 @@ unsigned long relay2OffTime = 0;
 unsigned long powerTimerStart = 0;
 bool timerStarted = false;
 
-// -------------------- Xor Encryp/Decrypt -------------------- //
-
-String xorCipher(String input) {
-  const byte key[] = encryption_key;
-  const int keyLength = encryption_key_length;
-
-  String output = "";
-  for (int i = 0; i < input.length(); i++) {
-    byte keyByte = key[i % keyLength];
-    output += char(input[i] ^ keyByte);
-  }
-  return output;
-}
-
-
-
 
 // -------------------- INTERRUPT SERVICE ROUTINE -------------------- //
 void sensorISR() {
@@ -126,73 +110,81 @@ void updateRelayStates() {
 }
 
 // This function receives data via LoRa, parses JSON content, and controls the relays.
+// This function receives data via LoRa, parses JSON content, and controls the relays.
 void ComReceive() {
   uint8_t rxData[255];
-  uint8_t rxLen = lora.Receive(rxData, 255);
-  if (rxLen > 0) {
-    String receivedMsg = "";
-    for (int i = 0; i < rxLen; i++) {
-      receivedMsg += (char)rxData[i];
+  uint8_t rxLen = lora.Receive(rxData, sizeof(rxData));
+  if (rxLen == 0) {
+    return;
+  }
+
+  // Decrypt in-place if enabled (manual XOR loop)
+  #if Encryption
+    static const uint8_t key[] = encryption_key;
+    const int K = encryption_key_length;
+    for (uint8_t i = 0; i < rxLen; ++i) {
+      rxData[i] ^= key[i % K];
+    }
+  #endif
+
+  // Parse JSON directly from the buffer (no String constructor needed)
+  JsonDocument doc;  // ArduinoJson v7: dynamic doc
+  DeserializationError error = deserializeJson(doc, (const char*)rxData, rxLen);
+  if (error) {
+    return;
+  }
+
+  const char* id    = doc["id"] | "";
+  const char* keyIn = doc["k"]  | "";
+  String comStr     = doc["com"].as<String>();
+
+  // Validate target
+  if (strcmp(id, NODE_NAME) == 0 && strcmp(keyIn, GATEWAY_KEY) == 0) {
+    // Relay 1
+    if (comStr == "10" || comStr == "11") {
+      digitalWrite(RELAY_PIN_1, HIGH);
+      relay1OffTime = millis() + (RelayOn_Time * 1000UL);
+    } else {
+      digitalWrite(RELAY_PIN_1, LOW);
+    }
+    // Relay 2
+    if (comStr == "01" || comStr == "11") {
+      digitalWrite(RELAY_PIN_2, HIGH);
+      relay2OffTime = millis() + (RelayOn_Time * 1000UL);
+    } else {
+      digitalWrite(RELAY_PIN_2, LOW);
     }
 
+    // ACK only if enabled
+    if (String(Command_ACK) == "true") {
+      // Build compact ACK JSON
+      const char r1 = (digitalRead(RELAY_PIN_1) == HIGH) ? '1' : '0';
+      const char r2 = (digitalRead(RELAY_PIN_2) == HIGH) ? '1' : '0';
 
-    #if Encryption
-    receivedMsg = xorCipher(receivedMsg);
-    #endif
+      // Small, fixed buffer to avoid heap churn
+      char ack[96];
+      int n = snprintf(
+        ack, sizeof(ack),
+        "{\"k\":\"%s\",\"id\":\"%s\",\"rw\":\"%c%c\"}",
+        GATEWAY_KEY, NODE_NAME, r1, r2
+      );
+      if (n < 0) return;                      // snprintf error
+      size_t txLen = (n < (int)sizeof(ack)) ? (size_t)n : sizeof(ack);
 
+      // Encrypt ACK in-place if enabled
+      #if Encryption
+        for (size_t i = 0; i < txLen; ++i) {
+          ack[i] ^= key[i % K];
+        }
+      #endif
 
-    JsonDocument doc;
-    DeserializationError error = deserializeJson(doc, receivedMsg);
-    if (error) {
-      return;
+      // Send
+      lora.Send((uint8_t*)ack, txLen, SX126x_TXMODE_SYNC);
     }
-
-    const char* id = doc["id"];
-    const char* key = doc["k"];
-    String comStr = doc["com"].as<String>();
-
-    // Check if id and key match
-    if (String(id) == NODE_NAME && String(key) == GATEWAY_KEY) {
-      // Handle command
-      if (comStr == "10" || comStr == "11") {
-        digitalWrite(RELAY_PIN_1, HIGH);
-        relay1OffTime = millis() + RelayOn_Time * 1000;
-      } else {
-        digitalWrite(RELAY_PIN_1, LOW);  // turn OFF if not asked
-      }
-
-      if (comStr == "01" || comStr == "11") {
-        digitalWrite(RELAY_PIN_2, HIGH);
-        relay2OffTime = millis() + RelayOn_Time * 1000;
-      } else {
-        digitalWrite(RELAY_PIN_2, LOW);  // turn OFF if not asked
-      }
-
-      // Only send ACK if Command_ACK is "true"
-      if (String(Command_ACK) == "true") {
-        // Build ACK (compact 2-bit style)
-        String r1 = digitalRead(RELAY_PIN_1) == HIGH ? "1" : "0";
-        String r2 = digitalRead(RELAY_PIN_2) == HIGH ? "1" : "0";
-        String combined = r1 + r2;
-
-        String ack = "{\"k\":\"" + String(GATEWAY_KEY)
-                  + "\",\"id\":\"" + String(NODE_NAME)
-                  + "\",\"rw\":\"" + combined + "\"}";
-
-        // Scramble if encryption is enabled
-        #if Encryption
-        ack = xorCipher(ack);
-        #endif
-
-
-        const char* ackStr = ack.c_str();
-        lora.Send((uint8_t*)ackStr, ack.length(), SX126x_TXMODE_SYNC);
-}
-
-    }
-
   }
 }
+
+
 
 
 // -------------------- SETUP -------------------- //
@@ -269,18 +261,24 @@ void loop() {
                    + ",\"b\":" + String(batt()) + "}";
 
     // Scramble if encryption is enabled
+    uint8_t buf[255];
+    uint8_t len = payload.length();
+    if (len > sizeof(buf)) len = sizeof(buf); // safety
+
+    memcpy(buf, payload.c_str(), len);  // copy original plaintext
+
     #if Encryption
-    payload = xorCipher(payload);
+      static const uint8_t key[] = encryption_key;
+      const int K = encryption_key_length;
+      for (size_t i = 0; i < len; ++i) {
+        buf[i] ^= key[i % K];
+      }
     #endif
 
-
-    // Send LoRa packet
-    const char* cstrPayload = payload.c_str();
-    uint8_t length = payload.length();
-
-    if (lora.Send((uint8_t*)cstrPayload, length, SX126x_TXMODE_SYNC)) {
+    if (lora.Send(buf, len, SX126x_TXMODE_SYNC)) {
       delay(20);
     }
+
 
     // Decide what to do after sending
     if (String(Power) == "Battery") {
