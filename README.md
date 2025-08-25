@@ -10,7 +10,19 @@ Your subscription goes a long way in backing my work. If you feel more generous,
 
 ## PirBOX-MAX and [PirBOX-LITE](https://github.com/PricelessToolkit/PirBOX-LITE)
 
-**PirBOX-MAX** is an Open-Source, compact, low-power LoRa-based PIR motion sensor designed for long-range applications such as basements, underground garages/parking areas, and remote sheds. In addition to motion detection, PirBOX-MAX features inputs for reed switches, SSR (solid-state relay) control, and a push-button input, enabling it to monitor doors/windows, control loads, or be used as a remote gate sensor and doorbell.
+
+
+
+<table>
+<tr>
+<td><img src="img/assam.jpg" alt="PirBOX-MAX" style="max-width:100px; height:auto;"></td>
+<td>
+
+**PirBOX-MAX** is an Open-Source, compact, low-power LoRa-based PIR motion sensor designed for long-range applications such as basements, underground garages/parking areas, and remote sheds. In addition to motion detection, PirBOX-MAX features **inputs for reed switches, SSR (solid-state relay) control, and a push-button input**, enabling it to monitor doors/windows, control loads, or be used as a remote gate sensor and doorbell.
+
+</td>
+</tr>
+</table>
 
 
 <img src="img/ha.png"/>
@@ -91,10 +103,10 @@ The configuration file is self-explanatory, each setting is clearly commented. I
 /////////////////////////// Logic Config //////////////////////////////////
 
 #define Power              "Battery"     // Can be "Battery" or "External"
-#define TwoWayCom          "true"       // "true" or "false", If true, after sending sensor data it will go into receiver mode and will wait "KeepPowerON_Time" for commands.
+#define TwoWayCom          "false"       // "true" or "false". If true, after sending sensor data, it will go into receiver mode and will wait "KeepPowerON_Time" for commands.
 #define KeepPowerON_Time   5            // Waiting xx seconds to receive command; if no command is received after KeepPowerON_Time it will power off.
 #define RelayOn_Time       1             // How much time relays will keep contact.
-#define Command_ACK        "true"       // Acknowledgement of received command (if "true" Sends back relay command "01","10" or "11")
+#define Command_ACK        "false"       // Acknowledgement of received command (if "true", Sends back relay command "01","10" or "11")
 #define Invert_RSW1_Logic  "false"       // If "true", Reed Switch 1 logic will be inverted (Normally Open / Normally Closed)
 #define Invert_RSW2_Logic  "false"       // If "true", Reed Switch 2 logic will be inverted (Normally Open / Normally Closed)
 
@@ -103,10 +115,17 @@ The configuration file is self-explanatory, each setting is clearly commented. I
 
 #define BAND                      868E6     // 433E6 MHz or 868E6 MHz or 915E6 MHz
 #define TX_OUTPUT_POWER           20        // dBm tx output power
-#define LORA_BANDWIDTH            4         // bandwidth 2: 31.25Khz, 3: 62.5Khz, 4: 125Khz, 5: 250KHZ, 6: 500Khz
-#define LORA_SPREADING_FACTOR     8         // spreading factor 6-12 [SF5..SF12]
+
+//| Bandwidth | Supported Spreading Factors |
+//|-----------|-----------------------------|
+//| 125 kHz   | SF5 – SF9                   |
+//| 250 kHz   | SF5 – SF10                  |
+//| 500 kHz   | SF5 – SF11                  |
+
+#define LORA_BANDWIDTH            5         // bandwidth 2: 31.25Khz, 3: 62.5Khz, 4: 125Khz, 5: 250KHZ, 6: 500Khz
+#define LORA_SPREADING_FACTOR     10         // spreading factor 6-12 [SF5..SF12]
 #define LORA_CODINGRATE           1         // [1: 4/5, 2: 4/6, 3: 4/7, 4: 4/8]
-#define LORA_PREAMBLE_LENGTH      6         // Same for Tx and Rx
+#define LORA_PREAMBLE_LENGTH      12         // Same for Tx and Rx
 #define LORA_PAYLOADLENGTH        0         // 0: Variable length packet (explicit header),  1..255 for Fixed length packet (implicit header)
 #define LORA_CRC_ON               true
 #define LORA_SYNC_WORD            0x1424    // The 0x1424 private sync word is equivalent to the CapiBridge 0x12 sync word.
