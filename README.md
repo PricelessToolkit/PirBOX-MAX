@@ -230,16 +230,17 @@ homeassistant/sensor/CapiBridge/command
 Payload
 
 ```json
-{"k":"xy","id":"PirBoxM","com":"11"}
+{"k":"xy","id":"PirBoxM","rm":"lora","com":"xxxxxx"}
 ```
 
 Descriptions
 
-| Key   | Description                   | Example     |
-|--------|-------------------------------|-------------|
-| `k`    | Private gateway key (auth)     | `"xy"`      |
-| `id`   | Target node name (device ID)   | `"PirBoxM"` |
-| `com`  | Command (text)   | `"xx"`      |
+| Key   | Description                     | Example     |
+|-------|---------------------------------|-------------|
+| `k`   | Private gateway key (auth)      | `"xy"`      |
+| `id`  | Target node name (device ID)    | `"PirBoxM"` |
+| `rm`  | Radio mode (`lora` / `espnow`)  | `"lora", "espnow"`    |
+| `com` | Command code (text/number)      | `"xxxxxx"`  |
 
 Command Reference
 
