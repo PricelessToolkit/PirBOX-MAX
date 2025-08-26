@@ -102,15 +102,20 @@ The configuration file is self-explanatory, each setting is clearly commented. I
 
 /////////////////////////// Logic Config //////////////////////////////////
 
-#define Power              "Battery"     // Can be "Battery" or "External"
-#define TwoWayCom          "false"       // "true" or "false". If true, after sending sensor data, it will go into receiver mode and will wait "KeepPowerON_Time" for commands.
-#define KeepPowerON_Time   5             // Waiting xx seconds to receive command; if no command is received after KeepPowerON_Time it will power off.
-#define RelayOn_Time       1             // How much time relays will keep contact.
-#define Command_ACK        "false"       // Acknowledgement of received command (if "true", Sends back relay command "01","10" or "11")
-#define Invert_RSW1_Logic  "false"       // If "true", Reed Switch 1 logic will be inverted (Normally Open / Normally Closed)
-#define Invert_RSW2_Logic  "false"       // If "true", Reed Switch 2 logic will be inverted (Normally Open / Normally Closed)
+#define Power                    "Battery"   // Can be "Battery" or "External"
+#define TwoWayCom                false       // true or false. If true, after sending sensor data, it will go into receiver mode and will wait "KeepPowerON_Time" for commands.
+#define KeepPowerON_Time         5           // Waiting xx seconds to receive command; if no command is received after KeepPowerON_Time it will power off.
+#define KeepPowerON_Timer_Reset  false       // if true, reset countdown every time a valid command is received
+#define RelayOn_Time             1           // How much time relays will keep contact.
+#define Command_ACK              false       // Acknowledgement of received command (if "true" Sends back relay command "01","10" or "11")
+#define Invert_RSW1_Logic        false       // If true, Reed Switch 1 logic will be inverted (Normally Open / Normally Closed)
+#define Invert_RSW2_Logic        false       // If true, Reed Switch 2 logic will be inverted (Normally Open / Normally Closed)
+#define RELAY_1_START            LOW         // set LOW if TwoWayCom = true.
+#define RELAY_2_START            LOW         // Set LOW if TwoWayCom = true.
+                                             // If set to HIGH, the relay will stay ON during the trigger period (~1s), and you can't control it.
+                                             // But it can help trigger external devices automatically, like a "Timd Light".
 
-////////////////////////////// LORA CONFIG ////////////////////////////////////
+////////////////////////////// LoRa Cnfig ////////////////////////////////////
 
 
 #define BAND                      868E6     // 433E6 MHz or 868E6 MHz or 915E6 MHz
