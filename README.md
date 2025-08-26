@@ -291,7 +291,7 @@ This project is open-source and includes Source code, 3D Print files, and Gerber
 <img src="img\ibom.jpg"/>
 
 > [!NOTE]
->  Please note that POS (Pick and Place) files and KiCad source files are not included. These are intentionally omitted, as this project is intended for manual assembly. If you prefer a ready-to-use solution, you can purchase one directly from my shop: https://www.pricelesstoolkit.com.
+>  Please note that CPL file or POS "Pick and Place" files, and KiCad source files are not included. These are intentionally omitted, as this project is intended for manual assembly. If you prefer a ready-to-use solution, you can purchase one directly from my shop: https://www.pricelesstoolkit.com.
 
 ----------------------------
 
