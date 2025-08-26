@@ -256,6 +256,49 @@ Command Reference
 | `11`    | Activates both Relay 1 and R2  |
 
 
+
+To send commands through the Home Assistant Dashboard, use the button example below.
+
+> [!NOTE]
+> Require [CapiBridge Gateway](https://github.com/PricelessToolkit/CapiBridge) *Supports 2-Way Comunication
+
+```yaml
+
+type: horizontal-stack
+cards:
+  - show_name: true
+    show_icon: true
+    type: button
+    name: Relay 1
+    icon: mdi:numeric-1-box
+    tap_action:
+      action: call-service
+      service: mqtt.publish
+      service_data:
+        topic: homeassistant/sensor/CapiBridge/command
+        payload: "{\"k\":\"xy\",\"id\":\"PirBoxM\",\"rm\":\"lora\",\"com\":\"10\"}"
+  - type: button
+    name: Relay 2
+    icon: mdi:numeric-2-box
+    tap_action:
+      action: call-service
+      service: mqtt.publish
+      service_data:
+        topic: homeassistant/sensor/CapiBridge/command
+        payload: "{\"k\":\"xy\",\"id\":\"PirBoxM\",\"rm\":\"lora\",\"com\":\"01\"}"
+  - type: button
+    name: Relay 1 and 2
+    icon: mdi:numeric-3-box
+    tap_action:
+      action: call-service
+      service: mqtt.publish
+      service_data:
+        topic: homeassistant/sensor/CapiBridge/command
+        payload: "{\"k\":\"xy\",\"id\":\"PirBoxM\",\"rm\":\"lora\",\"com\":\"11\"}"
+
+```
+
+
 ----------------------------
 
 ## 🪛 Screw Terminal Pinout
