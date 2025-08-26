@@ -7,8 +7,6 @@
 #include "Ra01S.h"
 #include <ArduinoJson.h>
 
-
-
 // -------------------- PIN ASSIGNMENTS -------------------- //
 #define OFF_PIN          PIN_PC0  // Pull HIGH for Power OFF
 #define BTN_PIN          PIN_PB1  // Push button input
@@ -110,7 +108,6 @@ void updateRelayStates() {
 }
 
 // This function receives data via LoRa, parses JSON content, and controls the relays.
-// This function receives data via LoRa, parses JSON content, and controls the relays.
 void ComReceive() {
   uint8_t rxData[255];
   uint8_t rxLen = lora.Receive(rxData, sizeof(rxData));
@@ -155,8 +152,15 @@ void ComReceive() {
       digitalWrite(RELAY_PIN_2, LOW);
     }
 
+    // >>> RESET THE KEEP-ON WINDOW WHEN A VALID COMMAND ARRIVES <<<
+    if (KeepPowerON_Timer_Reset && TwoWayCom) {
+      powerTimerStart = millis();   // restart the countdown window
+      timerStarted = true;
+    }
+
+
     // ACK only if enabled
-    if (String(Command_ACK) == "true") {
+    if (Command_ACK) {
       // Build compact ACK JSON
       const char r1 = (digitalRead(RELAY_PIN_1) == HIGH) ? '1' : '0';
       const char r2 = (digitalRead(RELAY_PIN_2) == HIGH) ? '1' : '0';
@@ -184,9 +188,6 @@ void ComReceive() {
   }
 }
 
-
-
-
 // -------------------- SETUP -------------------- //
 void setup() {
   // Set up power off pin
@@ -201,9 +202,9 @@ void setup() {
   
   // Set up relay outputs
   pinMode(RELAY_PIN_1, OUTPUT);
-  digitalWrite(RELAY_PIN_1, LOW);
+  digitalWrite(RELAY_PIN_1, RELAY_1_START);
   pinMode(RELAY_PIN_2, OUTPUT);
-  digitalWrite(RELAY_PIN_2, HIGH);
+  digitalWrite(RELAY_PIN_2, RELAY_2_START);
   
   pinMode(RADIO_DIO1_PIN, INPUT);
   delay(10);
@@ -226,8 +227,6 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(RSW_PIN_2), sensorISR, CHANGE);
 }
 
-
-
 // -------------------- LOOP -------------------- //
 void loop() {
   // -------------------- SENSOR TRIGGER HANDLING -------------------- //
@@ -240,12 +239,11 @@ void loop() {
     int currentRSW1 = digitalRead(RSW_PIN_1);
     int currentRSW2 = digitalRead(RSW_PIN_2);
 
-    // Invert logic if defined as "true"
-    if (String(Invert_RSW1_Logic) == "true") {
+    // Invert logic if defined as true
+    if (Invert_RSW1_Logic) {
       currentRSW1 = !currentRSW1;
     }
-
-    if (String(Invert_RSW2_Logic) == "true") {
+    if (Invert_RSW2_Logic) {
       currentRSW2 = !currentRSW2;
     }
 
@@ -279,14 +277,13 @@ void loop() {
       delay(20);
     }
 
-
     // Decide what to do after sending
     if (String(Power) == "Battery") {
-      if (String(TwoWayCom) == "true") {
-        powerTimerStart = millis();   // Start 3s wait
+      if (TwoWayCom) {
+        powerTimerStart = millis();   // start wait window
         timerStarted = true;
-      } else if (String(TwoWayCom) == "false") {
-        powerOFF();  // Shutdown immediately
+      } else {
+        powerOFF();                   // shutdown immediately
       }
     }
   }
@@ -297,8 +294,8 @@ void loop() {
   ComReceive();
   updateRelayStates();
 
-  // Handle countdown shutdown if waiting (Battery + TwoWayCom = True)
-  if (timerStarted && String(Power) == "Battery" && String(TwoWayCom) == "true") {
+  // Handle countdown shutdown if waiting (Battery + TwoWayCom = true)
+  if (timerStarted && String(Power) == "Battery" && TwoWayCom) {
     if (millis() - powerTimerStart >= (KeepPowerON_Time * 1000UL)) {
       powerOFF();
     }
@@ -311,4 +308,3 @@ void loop() {
 
   // Add any other non-blocking background logic here if needed
 }
-
