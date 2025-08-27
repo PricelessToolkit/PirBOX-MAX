@@ -41,7 +41,7 @@ Your subscription goes a long way in backing my work. If you feel more generous,
 - **Ultra-low power consumption**: ~12 µAh during active or inactive periods  
 - Powered by **3× AAA 1.5V batteries** for extended runtime  
 - Also supports **external 5V power supply** for flexible deployment  
-- Perfect for remote monitoring and control where Wi-Fi or Zigbee fall short
+- Perfect for remote monitoring and control where Wi-Fi or Zigbee falls short
 
 
 > [!NOTE]
@@ -50,11 +50,13 @@ Your subscription goes a long way in backing my work. If you feel more generous,
 ### 📋 Power Consumption Table
 Measured by "Power Profiler KIT 2"
 
-| Condition                         | Current Draw / Usage | Battery Life (approx.)                          |
-|----------------------------------|-----------------------|-------------------------------------------------|
-| No motion detected               | 12 µA                 | ~11.4 years (1,200,000 µAh / 12 µA)*            |
-| Constant motion detected         | 12 µA                 | ~11.4 years (1,200,000 µAh / 12 µA)*            |
-| Single status transmission (~500 ms) | 16 µAh             | ~60,000 Transmission*         |
+| Condition  "One-Way Mode"                     | Current Draw / Usage | Battery Life (approx.)                               |
+|-----------------------------------------------|----------------------|----------------------------------------------------|
+| Idle (motion or no motion — same draw)        | 14 µA                | ~9.78 years (1,200,000 µAh / 14 µA)*               |
+| motion + 1 reed switch held open              | 24 µA                | ~5.70 years (1,200,000 µAh / 24 µA)*               |
+| motion + 2 reed switches held open            | 30 µA                | ~4.57 years (1,200,000 µAh / 30 µA)*               |
+| One detection "event" (2 transmissions)       | 21.09 µAh            | ~56K events per full battery (no other load)*      |
+
 
 > [!NOTE]
 > \*All values are **theoretical estimates** based on lab measurements using a Nordic **Power Profiler Kit II**.  
@@ -66,8 +68,11 @@ Actual battery life will vary depending on battery quality, temperature, transmi
 - 3 x AAA 1.5v Battery.
 
 ### 📣 Updates, Bugfixes, and Breaking Changes
-- 22.05.2025 - Breaking Change (XOR obfuscation "Encryption" for LoRa).
-- - CapiBridge firmware needs to be updated.
+- 26.08.2025
+  - Breaking Change (XOR obfuscation "Encryption" for LoRa).
+  - Change of logic in relay behavior "Added new function"
+  - Refactoring code
+  - CapiBridge firmware needs to be updated.
 
 
 ## ⚙️ Configuration / Reflashing:
@@ -102,15 +107,20 @@ The configuration file is self-explanatory, each setting is clearly commented. I
 
 /////////////////////////// Logic Config //////////////////////////////////
 
-#define Power              "Battery"     // Can be "Battery" or "External"
-#define TwoWayCom          "false"       // "true" or "false". If true, after sending sensor data, it will go into receiver mode and will wait "KeepPowerON_Time" for commands.
-#define KeepPowerON_Time   5             // Waiting xx seconds to receive command; if no command is received after KeepPowerON_Time it will power off.
-#define RelayOn_Time       1             // How much time relays will keep contact.
-#define Command_ACK        "false"       // Acknowledgement of received command (if "true", Sends back relay command "01","10" or "11")
-#define Invert_RSW1_Logic  "false"       // If "true", Reed Switch 1 logic will be inverted (Normally Open / Normally Closed)
-#define Invert_RSW2_Logic  "false"       // If "true", Reed Switch 2 logic will be inverted (Normally Open / Normally Closed)
+#define Power                    "Battery"   // Can be "Battery" or "External"
+#define TwoWayCom                false       // true or false. If true, after sending sensor data, it will go into receiver mode and will wait "KeepPowerON_Time" for commands.
+#define KeepPowerON_Time         5           // Waiting xx seconds to receive command; if no command is received after KeepPowerON_Time it will power off.
+#define KeepPowerON_Timer_Reset  false       // if true, reset countdown every time a valid command is received
+#define RelayOn_Time             1           // How much time relays will keep contact.
+#define Command_ACK              false       // Acknowledgement of received command (if "true" Sends back relay command "01","10" or "11")
+#define Invert_RSW1_Logic        false       // If true, Reed Switch 1 logic will be inverted (Normally Open / Normally Closed)
+#define Invert_RSW2_Logic        false       // If true, Reed Switch 2 logic will be inverted (Normally Open / Normally Closed)
+#define RELAY_1_START            LOW         // set LOW if TwoWayCom = true.
+#define RELAY_2_START            LOW         // Set LOW if TwoWayCom = true.
+                                             // If set to HIGH, the relay will stay ON during the trigger period (~1s), and you can't control it.
+                                             // But it can help trigger external devices automatically, like a "Timd Light".
 
-////////////////////////////// LORA CONFIG ////////////////////////////////////
+////////////////////////////// LoRa Cnfig ////////////////////////////////////
 
 
 #define BAND                      868E6     // 433E6 MHz or 868E6 MHz or 915E6 MHz
@@ -251,6 +261,49 @@ Command Reference
 | `11`    | Activates both Relay 1 and R2  |
 
 
+
+To send commands through the Home Assistant Dashboard, use the button example below.
+
+> [!NOTE]
+> Require [CapiBridge Gateway](https://github.com/PricelessToolkit/CapiBridge) *Supports 2-Way Comunication
+
+```yaml
+
+type: horizontal-stack
+cards:
+  - show_name: true
+    show_icon: true
+    type: button
+    name: Relay 1
+    icon: mdi:numeric-1-box
+    tap_action:
+      action: call-service
+      service: mqtt.publish
+      service_data:
+        topic: homeassistant/sensor/CapiBridge/command
+        payload: "{\"k\":\"xy\",\"id\":\"PirBoxM\",\"rm\":\"lora\",\"com\":\"10\"}"
+  - type: button
+    name: Relay 2
+    icon: mdi:numeric-2-box
+    tap_action:
+      action: call-service
+      service: mqtt.publish
+      service_data:
+        topic: homeassistant/sensor/CapiBridge/command
+        payload: "{\"k\":\"xy\",\"id\":\"PirBoxM\",\"rm\":\"lora\",\"com\":\"01\"}"
+  - type: button
+    name: Relay 1 and 2
+    icon: mdi:numeric-3-box
+    tap_action:
+      action: call-service
+      service: mqtt.publish
+      service_data:
+        topic: homeassistant/sensor/CapiBridge/command
+        payload: "{\"k\":\"xy\",\"id\":\"PirBoxM\",\"rm\":\"lora\",\"com\":\"11\"}"
+
+```
+
+
 ----------------------------
 
 ## 🪛 Screw Terminal Pinout
@@ -272,7 +325,7 @@ The **PirBOX-MAX** features a 12-pin screw terminal. Below is the pinout and des
 | 9     | R1           | Relay 1 — No polarity                |
 | 10    | R1           | Relay 1 — No polarity                |
 | 11    | GND          | GND                                  |
-| 12    | 5V           | 5V input,  "At least 150mA"          |
+| 12    | 5V           | 5V input,  "At least 500mA"          |
 
 ----------------------------
 
