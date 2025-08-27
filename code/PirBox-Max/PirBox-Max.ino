@@ -73,11 +73,13 @@ void initLoRaRadio() {
 }
 
 void powerOFF() {
-  delay(100);
-  // Serial.println(F("Sleeping"));
-  delay(10);
-  digitalWrite(OFF_PIN, HIGH); // Powering off
+  static unsigned long offRequestTime = millis();  // remember first call time
+  if (millis() - offRequestTime >= 100) {
+    digitalWrite(OFF_PIN, HIGH);  // Powering off after ~100 ms
+  }
 }
+
+
 
 // -------------------- BATTERY MEASUREMENT -------------------- //
 int batt() {
@@ -273,9 +275,8 @@ void loop() {
       }
     #endif
 
-    if (lora.Send(buf, len, SX126x_TXMODE_SYNC)) {
-      delay(20);
-    }
+    lora.Send(buf, len, SX126x_TXMODE_SYNC);
+
 
     // Decide what to do after sending
     if (String(Power) == "Battery") {
