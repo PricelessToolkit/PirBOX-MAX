@@ -50,7 +50,7 @@ Your subscription goes a long way in backing my work. If you feel more generous,
 ### 📋 Power Consumption Table
 Measured by "Power Profiler KIT 2"
 
-| Condition                                   | Current Draw / Usage | Battery Life (approx.)                               |
+| Condition  "One-Way Mode"                     | Current Draw / Usage | Battery Life (approx.)                               |
 |-----------------------------------------------|----------------------|----------------------------------------------------|
 | Idle (motion or no motion — same draw)        | 14 µA                | ~9.78 years (1,200,000 µAh / 14 µA)*               |
 | motion + 1 reed switch held open              | 24 µA                | ~5.70 years (1,200,000 µAh / 24 µA)*               |
