@@ -50,11 +50,13 @@ Your subscription goes a long way in backing my work. If you feel more generous,
 ### 📋 Power Consumption Table
 Measured by "Power Profiler KIT 2"
 
-| Condition                         | Current Draw / Usage | Battery Life (approx.)                          |
-|----------------------------------|-----------------------|-------------------------------------------------|
-| No motion detected               | 12 µA                 | ~11.4 years (1,200,000 µAh / 12 µA)*            |
-| Constant motion detected         | 12 µA                 | ~11.4 years (1,200,000 µAh / 12 µA)*            |
-| Single status transmission (~500 ms) | 16 µAh             | ~60,000 Transmission*         |
+| Condition                                   | Current Draw / Usage | Battery Life (approx.)                               |
+|-----------------------------------------------|----------------------|----------------------------------------------------|
+| Idle (motion or no motion — same draw)        | 14 µA                | ~9.78 years (1,200,000 µAh / 14 µA)*               |
+| motion + 1 reed switch held open              | 24 µA                | ~5.70 years (1,200,000 µAh / 24 µA)*               |
+| motion + 2 reed switches held open            | 30 µA                | ~4.57 years (1,200,000 µAh / 30 µA)*               |
+| One detection "event" (2 transmissions)       | 21.09 µAh            | ~56K events per full battery (no other load)*      |
+
 
 > [!NOTE]
 > \*All values are **theoretical estimates** based on lab measurements using a Nordic **Power Profiler Kit II**.  
@@ -323,7 +325,7 @@ The **PirBOX-MAX** features a 12-pin screw terminal. Below is the pinout and des
 | 9     | R1           | Relay 1 — No polarity                |
 | 10    | R1           | Relay 1 — No polarity                |
 | 11    | GND          | GND                                  |
-| 12    | 5V           | 5V input,  "At least 200mA"          |
+| 12    | 5V           | 5V input,  "At least 500mA"          |
 
 ----------------------------
 
