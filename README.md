@@ -41,7 +41,7 @@ Your subscription goes a long way in backing my work. If you feel more generous,
 - **Ultra-low power consumption**: ~12 µAh during active or inactive periods  
 - Powered by **3× AAA 1.5V batteries** for extended runtime  
 - Also supports **external 5V power supply** for flexible deployment  
-- Perfect for remote monitoring and control where Wi-Fi or Zigbee fall short
+- Perfect for remote monitoring and control where Wi-Fi or Zigbee falls short
 
 
 > [!NOTE]
@@ -66,8 +66,11 @@ Actual battery life will vary depending on battery quality, temperature, transmi
 - 3 x AAA 1.5v Battery.
 
 ### 📣 Updates, Bugfixes, and Breaking Changes
-- 22.05.2025 - Breaking Change (XOR obfuscation "Encryption" for LoRa).
-- - CapiBridge firmware needs to be updated.
+- 26.08.2025
+  - Breaking Change (XOR obfuscation "Encryption" for LoRa).
+  - Change of logic in relay behavior "Added new function"
+  - Refactoring code
+  - CapiBridge firmware needs to be updated.
 
 
 ## ⚙️ Configuration / Reflashing:
