@@ -80,9 +80,10 @@ Actual battery life will vary depending on battery quality, temperature, transmi
 > By default, it comes already flashed and tested with the default firmware. Code"xy" and encryption_key { 0x4B, 0xA3, 0x3F, 0x9C }
 
 1. Install `MegaTinyCore` in Arduino IDE by adding this URL "http://drazzy.com/package_drazzy.com_index.json" into "File > Preferences > Additional boards manager URLs".
-2. Download the PirBOX-MAX project file; don't just copy and paste the code.
-3. Open the PirBox-MAX.ino file with Arduino IDE. "It will include all necessary files and Radio Library."
-4. In Config.h, change the sensor name, gateway key, Logic, and radio settings based on your gateway config
+2. Install `ArduinoJson` library.
+3. Download the PirBOX-MAX project file; don't just copy and paste the code.
+4. Open the PirBox-MAX.ino file with Arduino IDE. "It will include all necessary files and Radio Library."
+5. In Config.h, change the sensor name, gateway key, Logic, and radio settings based on your gateway config
 
 > [!IMPORTANT]
 >  Configure the "Logic" part correctly! Set Power to "Battery" or "External", and if you don't need 2-way communication, set "TwoWayCom" to "False". All sensor logic depends on these settings.
