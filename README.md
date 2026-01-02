@@ -93,6 +93,7 @@ Actual battery life will vary depending on battery quality, temperature, transmi
 
 The configuration file is self-explanatory, each setting is clearly commented. If you take a moment to read through the comments, everything should be clear without requiring further explanation.
 
+The `encruption_key` can be generated using instruction from [CapiBridge Github Page.]( https://github.com/PricelessToolkit/CapiBridge/tree/main?tab=readme-ov-file#-how-to-create-your-encryption_key-using-a-calculator)
 ```cpp
 
 /////////////////////////// LoRa Gateway Key ///////////////////////////
