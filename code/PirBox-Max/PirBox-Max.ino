@@ -72,11 +72,10 @@ void initLoRaRadio() {
   // Serial.println(F("LoRa ready to go!"));
 }
 
+
+
 void powerOFF() {
-  static unsigned long offRequestTime = millis();  // remember first call time
-  if (millis() - offRequestTime >= 100) {
-    digitalWrite(OFF_PIN, HIGH);  // Powering off after ~100 ms
-  }
+  digitalWrite(OFF_PIN, HIGH);
 }
 
 
