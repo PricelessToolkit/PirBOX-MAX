@@ -68,6 +68,8 @@ Actual battery life will vary depending on battery quality, temperature, transmi
 - 3 x AAA 1.5v Battery.
 
 ### 📣 Updates, Bugfixes, and Breaking Changes
+- 06.03.2026
+  - Fixed issue where device could stay powered on in certain configurations
 - 26.08.2025
   - Breaking Change (XOR obfuscation "Encryption" for LoRa).
   - Change of logic in relay behavior "Added new function"
